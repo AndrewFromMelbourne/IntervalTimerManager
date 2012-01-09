@@ -1,0 +1,28 @@
+#######################################
+# IntervalTimerManager
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+IntervalAction	KEYWORD1
+IntervalActionManager	KEYWORD1
+IntervalActionManagerInterface	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+action	KEYWORD2
+getId	KEYWORD2
+getInterval	KEYWORD2
+setInterval	KEYWORD2
+getNextActionTime	KEYWORD2
+setNextActionTime	KEYWORD2
+task	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
