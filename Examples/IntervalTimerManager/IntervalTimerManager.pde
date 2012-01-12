@@ -19,8 +19,8 @@ class SerialAction
 public:
 
     SerialAction(
-        int id,
-        int interval,
+        uint8_t id,
+        uint32_t interval,
         IntervalTimerManagerInterface& itmi)
     :
         IntervalAction(id, interval, itmi)
