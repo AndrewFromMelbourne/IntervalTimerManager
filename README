@@ -1,0 +1,99 @@
+The IntervalTimerManager library provides a mechanism to have an nymber of
+timer objects that will be actioned at particular intervals. For example a 
+flashing LED. The timer continually polls the time in milliseconds until one
+of the timers needs to be actioned. Once the timer is actioned the next time
+to action is set.
+
+To use the library you need to create an IntervalTimerManager object and a
+number of interval action objects. The IntervalActionManager is a template.
+You need to provide the template with the number of buttons that will be
+managed. IntervalTimerManager takes no parameters.
+
+So to create the IntervalTimerManager for 2 timers the code is
+
+//-------------------------------------------------------------------------
+
+IntervalTimerManager<2> intervalTimerManager;
+
+//-------------------------------------------------------------------------
+
+The IntervalTimerManager can then manage up to 2 IntervalAction objects. The
+IntervalAction class by itself doesn't provide any functionality. You need
+to create your own class that inherits from IntervalAction and does
+something with the action() virtual method. The following example creates
+a SerialAction class that prints the time in milliseconds that the action
+occured.
+
+//-------------------------------------------------------------------------
+
+class SerialAction
+:
+    public IntervalAction
+{
+public:
+
+    SerialAction(
+        uint8_t id,
+        uint32_t interval,
+        IntervalTimerManagerInterface& itmi)
+    :
+        IntervalAction(id, interval, itmi)
+    {
+    }
+    
+    virtual void action();
+};
+
+//-------------------------------------------------------------------------
+
+void SerialAction::action()
+{
+    Serial.print("action ");
+    Serial.print(millis(), DEC);
+    Serial.println("");
+}
+
+//-------------------------------------------------------------------------
+
+IntervalTimerManager<1> serialIntervalManager;
+
+SerialAction a1(0, 1, serialIntervalManager);
+
+//-------------------------------------------------------------------------
+
+void setup() 
+{
+    Serial.begin(115200); 
+    Serial.println("Starting Interval Timer Manager Test.");
+}
+ 
+//-------------------------------------------------------------------------
+
+The constructor for the Interval class takes the following parameters:
+
+	uint8_t id
+
+		The identifier for the timer. This is usefull if more than one
+		timer is created using the same class. It allows you to determine
+		which timer actioned the event.
+
+	uint32_t interval
+
+		The interval in milliseconds that the action should occur.
+
+	IntervalActionManagerInterface& abmi
+
+		The iterval action manager itself. 
+
+Each of the interval action objects register themselves with the interval
+action manager when they are created. The IntervalActionManager needs to
+check the time to look for timer events. You need to call the task() method
+with the loop() as follows:
+
+//-------------------------------------------------------------------------
+
+void loop() 
+{  
+    serialIntervalManager.task();
+}
+
