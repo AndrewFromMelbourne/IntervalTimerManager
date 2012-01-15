@@ -20,7 +20,35 @@ IntervalAction:: IntervalAction(
 :
 	_id(id),
 	_interval(interval),
-	_nextActionTime(0)
+	_nextActionTime(0),
+	_active((interval > 0) ? true : false)
 {
 	itmi.manageAction(this);
+}
+
+//-------------------------------------------------------------------------
+
+void
+IntervalAction:: setInterval(
+	uint32_t interval)
+{
+	_interval = interval;
+
+	if (interval == 0)
+	{
+		_active = false;
+	}
+}
+
+//-------------------------------------------------------------------------
+
+boolean
+IntervalAction:: activate()
+{
+	if (_interval > 0)
+	{
+		_active = true;
+	}
+
+	return _active;
 }

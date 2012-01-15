@@ -75,7 +75,7 @@ public:
 			{
 				IntervalAction* ia = _actions[i];
 
-				if (ia->getInterval() > 0)
+				if (ia->isActive())
 				{
 					ia->action();
 					ia->setNextActionTime(ia->getNextActionTime()

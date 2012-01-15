@@ -13,6 +13,12 @@
 //
 //-------------------------------------------------------------------------
 
+#if defined(ARDUINO) && ARDUINO >= 100
+	#include "Arduino.h"
+#else
+	#include "WProgram.h"
+#endif
+
 #include <inttypes.h>
 
 //-------------------------------------------------------------------------
@@ -23,12 +29,6 @@ class IntervalTimerManagerInterface;
 
 class IntervalAction 
 {
-private: 
-
-	uint8_t _id;
-	uint32_t _interval;     
-	uint32_t _nextActionTime;     
-
 public:  
 
 	IntervalAction(
@@ -41,13 +41,24 @@ public:
 	uint8_t getId() const { return _id; }
 
 	uint32_t getInterval() const { return _interval; }
-	void setInterval(uint32_t interval) { _interval = interval; }
+	void setInterval(uint32_t interval);
 
 	uint32_t getNextActionTime() const { return _nextActionTime; }
 	void setNextActionTime(uint32_t nextActionTime)
 	{
 		_nextActionTime = nextActionTime;
 	}
+
+	boolean activate();
+	void deactivate() { _active = false; }
+	boolean isActive() const { return _active; }
+
+private: 
+
+	uint8_t _id;
+	uint32_t _interval;     
+	uint32_t _nextActionTime;
+	boolean _active;
 };
 
 //-------------------------------------------------------------------------
