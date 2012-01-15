@@ -7,8 +7,8 @@
 #######################################
 
 IntervalAction	KEYWORD1
-IntervalActionManager	KEYWORD1
-IntervalActionManagerInterface	KEYWORD1
+IntervalTimerManager	KEYWORD1
+IntervalTimerManagerInterface	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
