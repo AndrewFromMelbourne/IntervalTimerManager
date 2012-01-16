@@ -37,7 +37,7 @@ public:
 template<uint8_t NumberOfTimers>
 class IntervalTimerManager
 :
-public IntervalTimerManagerInterface
+	public IntervalTimerManagerInterface
 {
 public:
 
