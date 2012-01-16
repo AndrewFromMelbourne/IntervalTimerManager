@@ -48,6 +48,7 @@ IntervalAction:: activate()
 	if (_interval > 0)
 	{
 		_active = true;
+		_nextActionTime = millis() + _interval;
 	}
 
 	return _active;

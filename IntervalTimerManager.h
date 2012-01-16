@@ -71,16 +71,13 @@ public:
 
 		for (int8_t i = 0; i < _timersManaged; ++i) 
 		{
-			if (_actions[i]->getNextActionTime() <= now)
-			{
-				IntervalAction* ia = _actions[i];
+			IntervalAction* ia = _actions[i];
 
-				if (ia->isActive())
-				{
-					ia->action();
-					ia->setNextActionTime(ia->getNextActionTime()
-										  + ia->getInterval());
-				}
+			if (ia->isActive() && (ia->getNextActionTime() <= now))
+			{
+				ia->action();
+				ia->setNextActionTime(ia->getNextActionTime()
+									  + ia->getInterval());
 			}
 		}
 	}
