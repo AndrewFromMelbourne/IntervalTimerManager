@@ -69,7 +69,7 @@ public:
 	{
 		uint32_t now = millis();
 
-		for (int8_t i = 0; i < _timersManaged; ++i) 
+		for (uint8_t i = 0; i < _timersManaged; ++i) 
 		{
 			IntervalAction* ia = _actions[i];
 
@@ -86,7 +86,7 @@ public:
 
 private:
 
-	int8_t _timersManaged;
+	uint8_t _timersManaged;
 	IntervalAction* _actions[NumberOfTimers];
 };
 
