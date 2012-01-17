@@ -21,7 +21,7 @@ IntervalAction:: IntervalAction(
 	_id(id),
 	_interval(interval),
 	_nextActionTime(0),
-	_active((interval > 0) ? true : false)
+	_active(false)
 {
 	itmi.manageAction(this);
 }

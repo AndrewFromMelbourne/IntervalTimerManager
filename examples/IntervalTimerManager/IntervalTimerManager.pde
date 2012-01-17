@@ -51,6 +51,7 @@ void setup()
 {
     Serial.begin(115200); 
     Serial.println("Starting Interval Timer Manager Test.");
+	a1.activate();
 }
  
 //-------------------------------------------------------------------------
