@@ -38,15 +38,17 @@ public:
 
 	virtual void action() {}
 
+	void reset() { _nextActionIn = _interval; }
+
 	uint8_t getId() const { return _id; }
 
 	uint32_t getInterval() const { return _interval; }
 	void setInterval(uint32_t interval);
 
-	uint32_t getNextActionTime() const { return _nextActionTime; }
-	void setNextActionTime(uint32_t nextActionTime)
+	uint32_t getNextActionIn() const { return _nextActionIn; }
+	void setNextActionIn(uint32_t nextActionIn)
 	{
-		_nextActionTime = nextActionTime;
+		_nextActionIn = nextActionIn;
 	}
 
 	boolean activate();
@@ -57,7 +59,7 @@ private:
 
 	uint8_t _id;
 	uint32_t _interval;     
-	uint32_t _nextActionTime;
+	uint32_t _nextActionIn;
 	boolean _active;
 };
 

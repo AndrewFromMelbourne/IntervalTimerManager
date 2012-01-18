@@ -20,7 +20,7 @@ IntervalAction:: IntervalAction(
 :
 	_id(id),
 	_interval(interval),
-	_nextActionTime(0),
+	_nextActionIn(0),
 	_active(false)
 {
 	itmi.manageAction(this);
@@ -48,7 +48,7 @@ IntervalAction:: activate()
 	if (_interval > 0)
 	{
 		_active = true;
-		_nextActionTime = millis() + _interval;
+		_nextActionIn = _interval;
 	}
 
 	return _active;

@@ -45,6 +45,7 @@ public:
 
 	IntervalTimerManager()
 	:
+		_previous(0),
 		_timersManaged(0)
 	{
 	}
@@ -58,7 +59,10 @@ public:
 		if (_timersManaged < NumberOfTimers)
 		{
 			_actions[_timersManaged++] = ia;
-			ia->setNextActionTime(millis() + ia->getInterval());
+			if (ia->isActive())
+			{
+				ia->reset();
+			}
 		}
 	}
 
@@ -69,23 +73,50 @@ public:
 	{
 		uint32_t now = millis();
 
-		for (uint8_t i = 0; i < _timersManaged; ++i) 
+		if (_previous == 0)
 		{
-			IntervalAction* ia = _actions[i];
+			_previous = now;
+		}
 
-			if (ia->isActive() && (ia->getNextActionTime() <= now))
+		uint32_t elapsed = now - _previous;
+
+		if (elapsed > 0)
+		{
+			for (uint8_t i = 0; i < _timersManaged; ++i) 
 			{
-				ia->action();
-				ia->setNextActionTime(ia->getNextActionTime()
-									  + ia->getInterval());
+				IntervalAction* ia = _actions[i];
+
+				if (ia->isActive())
+				{
+					uint32_t nextActionIn = ia->getNextActionIn();
+
+					if (nextActionIn > 0)
+					{
+						nextActionIn -= elapsed;
+						ia->setNextActionIn(nextActionIn);
+					}
+
+					if (nextActionIn == 0)
+					{
+						ia->action();
+
+						if (ia->isActive())
+						{
+							ia->reset();
+						}
+					}
+				}
 			}
 		}
+
+		_previous = now;
 	}
 
 	//---------------------------------------------------------------------
 
 private:
 
+	uint32_t _previous;
 	uint8_t _timersManaged;
 	IntervalAction* _actions[NumberOfTimers];
 };
