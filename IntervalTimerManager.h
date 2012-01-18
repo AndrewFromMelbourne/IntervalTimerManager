@@ -72,15 +72,9 @@ public:
 	task()
 	{
 		uint32_t now = millis();
-
-		if (_previous == 0)
-		{
-			_previous = now;
-		}
-
 		uint32_t elapsed = now - _previous;
 
-		if (elapsed > 0)
+		if ((elapsed > 0) && (_previous != 0))
 		{
 			for (uint8_t i = 0; i < _timersManaged; ++i) 
 			{
