@@ -76,7 +76,7 @@ public:
 
 		if (_previous > now)
 		{
-			elapsed = (0xFFFF - _previous) + now;
+			elapsed = (0xFFFF - _previous) + now + 1;
 		}
 
 		if ((elapsed > 0) && (_previous != 0))
