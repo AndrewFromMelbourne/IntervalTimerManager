@@ -43,7 +43,7 @@ void SerialAction::action()
 
 IntervalTimerManager<1> serialIntervalManager;
 
-SerialAction a1(0, 1, serialIntervalManager);
+SerialAction a1(0, 1000, serialIntervalManager);
 
 //-------------------------------------------------------------------------
 

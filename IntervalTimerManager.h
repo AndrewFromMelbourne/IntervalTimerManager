@@ -74,6 +74,11 @@ public:
 		uint32_t now = millis();
 		uint32_t elapsed = now - _previous;
 
+		if (_previous > now)
+		{
+			elapsed = (0xFFFF - _previous) + now;
+		}
+
 		if ((elapsed > 0) && (_previous != 0))
 		{
 			for (uint8_t i = 0; i < _timersManaged; ++i) 
