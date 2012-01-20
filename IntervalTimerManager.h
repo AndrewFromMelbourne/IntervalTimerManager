@@ -59,6 +59,7 @@ public:
 		if (_timersManaged < NumberOfTimers)
 		{
 			_actions[_timersManaged++] = ia;
+
 			if (ia->isActive())
 			{
 				ia->reset();
@@ -91,7 +92,15 @@ public:
 
 					if (nextActionIn > 0)
 					{
-						nextActionIn -= elapsed;
+						if (nextActionIn > elapsed)
+						{
+							nextActionIn -= elapsed;
+						}
+						else
+						{
+							nextActionIn = 0;
+						}
+
 						ia->setNextActionIn(nextActionIn);
 					}
 
