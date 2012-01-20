@@ -1,4 +1,4 @@
-The IntervalTimerManager library provides a mechanism to have an nymber of
+The IntervalTimerManager library provides a mechanism to have an number of
 timer objects that will be actioned at particular intervals. For example a 
 flashing LED. The timer continually polls the time in milliseconds until one
 of the timers needs to be actioned. Once the timer is actioned the next time
@@ -8,6 +8,10 @@ To use the library you need to create an IntervalTimerManager object and a
 number of interval action objects. The IntervalActionManager is a template.
 You need to provide the template with the number of buttons that will be
 managed. IntervalTimerManager takes no parameters.
+
+IntervalAction object by default an inactive. To start the actions being
+called at the desired interval, the interval action objects must be started
+by calling activate().
 
 So to create the IntervalTimerManager for 2 timers the code is
 
@@ -65,6 +69,7 @@ void setup()
 {
     Serial.begin(115200); 
     Serial.println("Starting Interval Timer Manager Test.");
+	a1.activate();
 }
  
 //-------------------------------------------------------------------------
@@ -88,7 +93,7 @@ The constructor for the Interval class takes the following parameters:
 Each of the interval action objects register themselves with the interval
 action manager when they are created. The IntervalActionManager needs to
 check the time to look for timer events. You need to call the task() method
-with the loop() as follows:
+within loop() as follows:
 
 //-------------------------------------------------------------------------
 
