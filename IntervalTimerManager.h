@@ -14,9 +14,9 @@
 //-------------------------------------------------------------------------
 
 #if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
+    #include "Arduino.h"
 #else
-	#include "WProgram.h"
+    #include "WProgram.h"
 #endif
 
 #include <inttypes.h>
@@ -29,7 +29,7 @@ class IntervalTimerManagerInterface
 {
 public:
 
-	virtual void manageAction(IntervalAction* ia) {}
+    virtual void manageAction(IntervalAction* ia) {}
 };
 
 //-------------------------------------------------------------------------
@@ -37,96 +37,96 @@ public:
 template<uint8_t NumberOfTimers>
 class IntervalTimerManager
 :
-	public IntervalTimerManagerInterface
+    public IntervalTimerManagerInterface
 {
 public:
 
-	//---------------------------------------------------------------------
+    //---------------------------------------------------------------------
 
-	IntervalTimerManager()
-	:
-		_previous(0),
-		_timersManaged(0)
-	{
-	}
+    IntervalTimerManager()
+    :
+        _previous(0),
+        _timersManaged(0)
+    {
+    }
   
-	//---------------------------------------------------------------------
+    //---------------------------------------------------------------------
 
-	virtual void
-	manageAction(
-		IntervalAction* ia)
-	{
-		if (_timersManaged < NumberOfTimers)
-		{
-			_actions[_timersManaged++] = ia;
+    virtual void
+    manageAction(
+        IntervalAction* ia)
+    {
+        if (_timersManaged < NumberOfTimers)
+        {
+            _actions[_timersManaged++] = ia;
 
-			if (ia->isActive())
-			{
-				ia->reset();
-			}
-		}
-	}
+            if (ia->isActive())
+            {
+                ia->reset();
+            }
+        }
+    }
 
-	//---------------------------------------------------------------------
+    //---------------------------------------------------------------------
 
-	void
-	task()
-	{
-		uint32_t now = millis();
-		uint32_t elapsed = now - _previous;
+    void
+    task()
+    {
+        uint32_t now = millis();
+        uint32_t elapsed = now - _previous;
 
-		if (_previous > now)
-		{
-			elapsed = (0xFFFFFFFF - _previous) + now + 1;
-		}
+        if (_previous > now)
+        {
+            elapsed = (0xFFFFFFFF - _previous) + now + 1;
+        }
 
-		if ((elapsed > 0) && (_previous != 0))
-		{
-			for (uint8_t i = 0; i < _timersManaged; ++i) 
-			{
-				IntervalAction* ia = _actions[i];
+        if ((elapsed > 0) && (_previous != 0))
+        {
+            for (uint8_t i = 0; i < _timersManaged; ++i) 
+            {
+                IntervalAction* ia = _actions[i];
 
-				if (ia->isActive())
-				{
-					uint32_t nextActionIn = ia->getNextActionIn();
+                if (ia->isActive())
+                {
+                    uint32_t nextActionIn = ia->getNextActionIn();
 
-					if (nextActionIn > 0)
-					{
-						if (nextActionIn > elapsed)
-						{
-							nextActionIn -= elapsed;
-						}
-						else
-						{
-							nextActionIn = 0;
-						}
+                    if (nextActionIn > 0)
+                    {
+                        if (nextActionIn > elapsed)
+                        {
+                            nextActionIn -= elapsed;
+                        }
+                        else
+                        {
+                            nextActionIn = 0;
+                        }
 
-						ia->setNextActionIn(nextActionIn);
-					}
+                        ia->setNextActionIn(nextActionIn);
+                    }
 
-					if (nextActionIn == 0)
-					{
-						ia->action();
+                    if (nextActionIn == 0)
+                    {
+                        ia->action();
 
-						if (ia->isActive())
-						{
-							ia->reset();
-						}
-					}
-				}
-			}
-		}
+                        if (ia->isActive())
+                        {
+                            ia->reset();
+                        }
+                    }
+                }
+            }
+        }
 
-		_previous = now;
-	}
+        _previous = now;
+    }
 
-	//---------------------------------------------------------------------
+    //---------------------------------------------------------------------
 
 private:
 
-	uint32_t _previous;
-	uint8_t _timersManaged;
-	IntervalAction* _actions[NumberOfTimers];
+    uint32_t _previous;
+    uint8_t _timersManaged;
+    IntervalAction* _actions[NumberOfTimers];
 };
 
 //-------------------------------------------------------------------------

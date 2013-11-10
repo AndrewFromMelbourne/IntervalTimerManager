@@ -6,7 +6,7 @@ to action is set.
 
 To use the library you need to create an IntervalTimerManager object and a
 number of interval action objects. The IntervalActionManager is a template.
-You need to provide the template with the number of times that will be
+You need to provide the template with the number of buttons that will be
 managed. IntervalTimerManager takes no parameters.
 
 IntervalAction object by default an inactive. To start the actions being
@@ -69,26 +69,26 @@ void setup()
 {
     Serial.begin(115200); 
     Serial.println("Starting Interval Timer Manager Test.");
-    a1.activate();
+	a1.activate();
 }
  
 //-------------------------------------------------------------------------
 
 The constructor for the Interval class takes the following parameters:
 
-    uint8_t id
+	uint8_t id
 
-        The identifier for the timer. This is usefull if more than one
-        timer is created using the same class. It allows you to determine
-        which timer actioned the event.
+		The identifier for the timer. This is usefull if more than one
+		timer is created using the same class. It allows you to determine
+		which timer actioned the event.
 
-    uint32_t interval
+	uint32_t interval
 
-        The interval in milliseconds that the action should occur.
+		The interval in milliseconds that the action should occur.
 
-    IntervalActionManagerInterface& abmi
+	IntervalActionManagerInterface& abmi
 
-        The iterval action manager itself. 
+		The iterval action manager itself. 
 
 Each of the interval action objects register themselves with the interval
 action manager when they are created. The IntervalActionManager needs to

@@ -14,9 +14,9 @@
 //-------------------------------------------------------------------------
 
 #if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
+    #include "Arduino.h"
 #else
-	#include "WProgram.h"
+    #include "WProgram.h"
 #endif
 
 #include <inttypes.h>
@@ -31,36 +31,36 @@ class IntervalAction
 {
 public:  
 
-	IntervalAction(
-		uint8_t id,
-		uint32_t interval,
-		IntervalTimerManagerInterface& itmi);
+    IntervalAction(
+        uint8_t id,
+        uint32_t interval,
+        IntervalTimerManagerInterface& itmi);
 
-	virtual void action() {}
+    virtual void action() {}
 
-	void reset() { _nextActionIn = _interval; }
+    void reset() { _nextActionIn = _interval; }
 
-	uint8_t getId() const { return _id; }
+    uint8_t getId() const { return _id; }
 
-	uint32_t getInterval() const { return _interval; }
-	void setInterval(uint32_t interval);
+    uint32_t getInterval() const { return _interval; }
+    void setInterval(uint32_t interval);
 
-	uint32_t getNextActionIn() const { return _nextActionIn; }
-	void setNextActionIn(uint32_t nextActionIn)
-	{
-		_nextActionIn = nextActionIn;
-	}
+    uint32_t getNextActionIn() const { return _nextActionIn; }
+    void setNextActionIn(uint32_t nextActionIn)
+    {
+        _nextActionIn = nextActionIn;
+    }
 
-	boolean activate();
-	void deactivate() { _active = false; }
-	boolean isActive() const { return _active; }
+    boolean activate();
+    void deactivate() { _active = false; }
+    boolean isActive() const { return _active; }
 
 private: 
 
-	uint8_t _id;
-	uint32_t _interval;     
-	uint32_t _nextActionIn;
-	boolean _active;
+    uint8_t _id;
+    uint32_t _interval;     
+    uint32_t _nextActionIn;
+    boolean _active;
 };
 
 //-------------------------------------------------------------------------
